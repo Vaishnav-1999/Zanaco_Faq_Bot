@@ -1,0 +1,42 @@
+version: "3.1"
+
+stories:
+
+- story: User needs more help
+  steps:
+    - intent: greet 
+    - action: utter_greet
+    - action: action_enter_name
+      # - action: utter_ask_name 
+    # - action: name_form 
+    # - active_loop: name_form 
+    # - slot_was_set: 
+    #     - name: "John" # example 
+    # - active_loop: null 
+    # - action: utter_greet_with_name
+    # - action: action_show_main_menu 
+    # - slot_was_set:
+    #     - menu_level: "faqs"
+    # - slot_was_set:
+    #     - name: null      # <- This unsets the name slot
+    # - action: action_deactivate_form
+
+
+# - story: interactive_story_1
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - action: name_form
+#   - active_loop: name_form
+#   - slot_was_set:
+#     - name: "vaishnav"
+#   # - action: name_form
+#   - active_loop: null
+#   - action: utter_greet_with_name
+#   - action: action_show_main_menu
+#   # - slot_was_set:
+#   #   - name: null
+#   # - slot_was_set:
+#   #   - menu_level: faqs
+#   - intent: select_faq_category
+#   - action: action_handle_option

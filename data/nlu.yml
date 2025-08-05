@@ -1,0 +1,136 @@
+version: "3.1"
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+- intent: goodbye
+  examples: |
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+- intent: FAQs
+  examples: |
+    - 1
+    - one
+    - mobile banking
+    - Mobile Banking
+    - I want mobile banking
+    - 2
+    - two
+    - faqs
+    - FAQs
+    - I want FAQs
+    - Main Menu
+    - Menu
+- intent: select_faq_category
+  examples: |
+    - 1
+    - card services
+    - 2
+    - efts
+    - 3
+    - credit
+    - 4
+    - bill muster
+    - 5
+    - internet banking
+    - 6
+    - general banking
+    - 7
+    - mobile banking
+    - 8
+    - zanaco xpress
+- intent: give_rating
+  examples: |
+    - I rate you 5
+    - My rating is 4
+    - You were very helpful, 5 stars
+    - I would say 3
+    - I'd give you 2
+- intent: give_feedback
+  examples: |
+    - Improve the UI.
+    - The app is too slow.
+    - Make navigation easier.
+    - Add fingerprint login.
+    - I didn't find the options I was looking for.
+    - Reduce wait time.
+    - It's confusing to use.
+    - The chatbot didn’t help much.
+- intent: nlu_fallback
+  examples: |
+    - vaishnav

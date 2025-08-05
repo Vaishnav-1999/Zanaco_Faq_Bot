@@ -1,0 +1,7 @@
+{
+  "rule_only_slots": [],
+  "rule_only_loops": [
+    "feedback_form",
+    "customer_info_form"
+  ]
+}

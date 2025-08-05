@@ -1,0 +1,93 @@
+version: "3.1"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+
+
+  # CUSTOM RULES
+
+- rule: Handle main menu option
+  steps:
+  - intent: select_faq_category
+  - action: action_handle_option
+
+# - rule: Menu flow
+#   steps:
+#   - intent: greet
+#   - action: action_show_main_menu
+
+- rule: Exit flow
+  steps:
+  - intent: deny
+  - action: utter_entry_flow
+
+- rule: Show FAQ Menu
+  steps:
+  - intent: FAQs
+  - action: action_show_main_menu
+
+- rule: Ask for rating if user says yes
+  steps:
+    - intent: affirm
+    - action: action_handle_affirm
+
+- rule: Handle rating
+  steps:
+    - intent: give_rating
+    - action: action_handle_rating
+    - active_loop: feedback_form
+
+# - rule: Handle user feedback after low rating
+#   steps:
+#     - slot_was_set:
+#         - request_feedback: true
+#     - intent: give_feedback
+#     - action: action_handle_feedback
+
+# - rule: Activate feedback form
+#   steps:
+#     - intent: give_rating
+#     - action: action_handle_rating
+#     - active_loop: feedback_form
+
+- rule: Submit feedback form
+  condition:
+    - active_loop: feedback_form
+  steps:
+    - action: feedback_form
+    - active_loop: null
+    - action: submit_feedback_form
+
+- rule: Submit customer info form
+  condition:
+    - active_loop: customer_info_form
+  steps:
+    - action: customer_info_form
+    - active_loop: null
+    - action: submit_customer_info_form
+    - action: action_reset_cust_info
+
+- rule: Handle Name
+  condition:
+    - active_loop: name_form
+  steps:  
+    - action: name_form
+    - active_loop: null
+    - action: utter_greet_with_name
+    - action: action_show_main_menu
+    - action: action_deactivate_form
+
+# - rule: Handle selected FAQ category
+#   steps:
+#     - intent: select_faq_category
+#     - action: action_handle_faq_category

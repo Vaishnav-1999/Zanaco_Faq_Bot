@@ -1,0 +1,1320 @@
+version: '3.1'
+intents:
+- affirm
+- bot_challenge
+- deny
+- give_feedback
+- give_rating
+- goodbye
+- greet
+- mood_great
+- mood_unhappy
+- nlu_fallback
+- select_faq_category
+- select_main_option
+entities:
+- menu_level
+- rating
+- request_feedback
+slots:
+  cust_info:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: customer_info_form
+        requested_slot: cust_info
+  menu_level:
+    type: text
+    mappings:
+    - type: custom
+  rating:
+    type: float
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: rating
+  request_feedback:
+    type: bool
+    influence_conversation: false
+    mappings:
+    - type: custom
+  user_feedback:
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: feedback_form
+        requested_slot: user_feedback
+  name:
+    type: text
+    influence_conversation: true
+    mappings:
+    - type: from_text
+      conditions:
+      - active_loop: name_form
+        requested_slot: name
+forms:
+  feedback_form:
+    required_slots:
+    - user_feedback
+  customer_info_form:
+    required_slots:
+    - cust_info
+  name_form:
+    required_slots:
+    - name
+responses:
+  utter_greet:
+  - text: Hello! I am Coco! How can I help you?
+  utter_greet_with_name:
+  - text: '{name}, Please Choose a Category'
+  utter_cheer_up:
+  - text: 'Here is something to cheer you up:'
+    image: https://i.imgur.com/nGF1K8f.jpg
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_happy:
+  - text: Great, carry on!
+  utter_ask_name:
+  - text: Please Enter you name
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_ask_option:
+  - text: |
+      Please let me know how you want to proceed:
+      1. Mobile Banking
+      2. FAQs
+  utter_select_faq_category:
+  - text: |
+      Please choose a category from the FAQs:
+      1. CARD SERVICES
+      2. EFTS
+      3. CREDIT
+      4. BILL MUSTER
+      5. INTERNET BANKING
+      6. GENERAL BANKING
+      7. MOBILE BANKING
+      8. ZANACO XPRESS
+  utter_card_services_menu:
+  - text: |
+      Please choose a question related to CARD SERVICES:
+      1. How do I change my card PIN?
+      2. How do I reset my Debit Card PIN?
+      3. What can I do if I forget my Debit Card PIN?
+      4. How do I reset my Card PIN after entering a wrong one?
+      5. How do I reset my Card PIN after exceeding PIN tries?
+      6. Can I use my card anywhere?
+      7. I’ve lost my debit card after hours. What do I do?
+      8. Can I have two (2) debit cards in my name on the same account?
+      9. I ordered something online and my debit card transaction was declined. What could be wrong?
+      10. Card blocking
+      11. My account was closed; After reopening the account my debit card does not work
+      12. How can I get a refund for an online card payment?
+      13. How can I increase my daily card limit?
+      14. How can I have full card access outside the country?
+      15. Why is my debit card not working for Online, POS and at the ATM?
+      16. What is a "blocked Amount" on my account?
+      17. Blocked Amount on my account?
+      18. What should I do to use my Debit card outside the country account?
+      19. Disputed card transactions
+      20. Charges for Online payment
+  utter_efts_menu:
+  - text: |
+      Please choose a question related to EFTS:
+      1. Why is my RTGS transfer delayed? (Instant Transfer)
+      2. Why is my DDAC transfer delayed? (Non-Instant transfer)
+      3. Why is my Foreign transfer delayed?
+      4. There is a delay to receive funds sent to me through RTGS?
+      5. There is a delay to receive funds sent to me through DDACC?
+      6. Why have I been charged with a penalty charge for bounced DDACC?
+      7. Why is there a delay in the funds recall I initiated?
+      8. I sent funds and the beneficiary has not been credited
+      9. Why is there a DDACC debit on my account?
+      10. How can I get more information on the credit on my account?
+      11. Why was I credited less funds than what I was expecting?
+      12. Why has the credit on my Account been reversed and yet I was expecting funds?
+      13. I was expecting a different currency but received funds less than the equivalent of the currency I was expecting?
+      14. Funds transfer returned
+  utter_credit_menu:
+  - text: |
+      Please choose a question related to CREDIT:
+      1. How do I apply for a Zanaco Personal Loan Online?
+      2. How do I apply for a Zanaco Personal Loan?
+      3. How do I apply for an Xpress Loan?
+      4. What are the current interest rates on personal Loans?
+      5. What are the current interest rates on Xpress Loans?
+      6. How long does it take to receive my funds?
+      7. Can I top-up on my existing loan?
+      8. Can I refinance my existing loan?
+      9. Does Zanaco payoff loans from other institutions?
+      10. Does Zanaco payoff loans from other institutions even when I do not have a loan with Zanaco?
+      11. Are there any fees?
+      12. How do I get a Credit Reference Bureau (CRB) clearance?
+      13. How do I get a Loan Disbursement Advise?
+      14. I need a loan clearance letter, how do I go about this?
+      15. Why has my loan tenure been extended?
+      16. The loan interest applied is different from the interest I signed, why?
+      17. How can I get an Overdraft?
+      18. What are the requirements for a Premier Loan?
+      19. What are the requirements for a Business Loan?
+      20. What are the requirements for a Scheme Loan?
+      21. Why has my loan disbursement been delayed?
+      22. What are the interest rates for Scheme loans?
+      23. What are the interest rates for Premier loans?
+      24. How do I get my loan statement?
+      25. Does Zanaco offer loans for agricultural purposes?
+      26. How and when do I make loan repayments?
+      27. Can I settle or close my loan early?
+      28. Where can I view the remaining balance of my loan?
+      29. Does Zanaco offer Mortgage or Building Loans?
+  utter_bill_muster_menu:
+  - text: |
+      Please choose a question related to BILL MUSTER:
+      1. Why is my Bill Muster deposit not reflecting?
+      2. Why has the beneficiary not been credited?
+      3. Transaction posted to the wrong institution
+      4. My student details are not appearing at the bank
+      5. My Mobile Money account was debited but the tuition fees are not reflecting
+      6. My student number/student name was misposted
+      7. Failed notifications
+  utter_internet_banking_menu:
+  - text: |
+      Please choose a question related to INTERNET BANKING:
+      1. Is there a cutoff time for transfers to other banks on Internet Banking?
+      2. Customer not using platform
+      3. I am locked out of my online account. Can my spouse or friend call the bank to have it reset?
+      4. If I open a new account, will it automatically be added to my current Internet Banking account?
+      5. How can I reset my Internet Banking Password?
+      6. Transferred funds but the beneficiary has not received the funds
+      7. Rejected funds
+      8. Cannot receive my OTP
+      9. User ID not received
+      10. Internet Banking not available
+      11. Cross-border transfer not reflecting on the beneficiary account
+  utter_general_banking_menu:
+  - text: |
+      Please choose a question related to GENERAL BANKING:
+      1. What is the difference between Current Balance and Available Balance when I view my account?
+      2. Will my Available Balance change throughout the day?
+      3. What documentation do I need to change my name on my account?
+      4. How do I add or remove someone from my account?
+      5. What are the requirements to open a Private Banking Account?
+      6. What are the requirements to open a Private Premium Banking Account?
+      7. What are the requirements to open a Private Savings Account?
+      8. What are the requirements to open a Preferred Plus Current Account?
+      9. What are the requirements to open a Zanaco Aspire Plus Account?
+      10. What are the requirements to open a Preferred Current Account?
+      11. What are the requirements to open a Zanaco Aspire Account?
+      12. What are the requirements to open a Preferred Savings Account?
+      13. What are the requirements to open a SureSave Account?
+      14. What are the requirements to open a Village Banking Savings Account?
+      15. What are the requirements to open a Savings Pensioner Account?
+      16. What are the requirements to open a Term Deposit Account with Upfront Interest?
+      17. What are the requirements to open a Term Deposit Account with Partial Redemption?
+      18. What are the requirements to open an Individual Term Deposit Account?
+      19. What are the requirements to open a Baby Blossom Account?
+      20. What are the requirements to open a Long Term Treasure Chest Account?
+      21. What are the requirements to open a Short Term Treasure Chest Account?
+      22. My account is dormant, what do I do to activate the account?
+      23. My account was closed, can I reopen the same account?
+      24. I would like to know my account number
+      25. What are the current Forex rates?
+      26. What is the balance on my account?
+      27. How do I get my account statement?
+      28. How can I close my account?
+      29. I would like to know your branch location information
+      30. What are your branch operating hours?
+      31. What are the charges for ATM withdrawals?
+      32. Can I deposit a cheque at a deposit-taking ATM?
+      33. How do I get a line of credit letter from Zanaco to bid for a Tender available?
+      34. I am unable to transfer funds to a digital 934 account on my company internet banking platform
+      35. I transferred funds from my ZMW account to a USD account accidentally instead of a ZMW account. Can I recall this transaction and still get the same value for my funds despite the fluctuating exchange rate?
+      36. Who is my relationship manager?
+  utter_mobile_banking_menu:
+  - text: |
+      Please select a question related to MOBILE BANKING:
+      1. How do I link my Account to Mobile Banking?
+      2. How can I change my Account number and phone number change?
+      3. Failed Airtime Top Up
+      4. I do not have Mobile Money Services on my Profile
+      5. I have not received the Cash Out message
+      6. PIN reset OTP has expired
+      7. Failed Cash Out
+      8. Failed Funds Transfer
+      9. Am failing to register on mobile banking
+      10. I am getting an Error when transacting on mobile banking
+      11. Failed Multichoice
+      12. Failed Mobile Money transaction from Bank to Mobile Money
+      13. Failed Mobile Money transaction from Mobile Money to Bank
+      14. Wrong Funds Transfer
+      15. Mobile Banking PIN Reset
+      16. Failed Bill payment to a school
+      17. Failed Bill payment - Water
+      18. I am requesting for reversal of wrong funds transfer
+      19. Zesco Token
+  utter_zanaco_xpress_menu:
+  - text: |
+      Please select a question related to ZANACO XPRESS:
+      1. Delayed Credit
+      2. Cash Withdrawal by Card
+      3. Deposits
+      4. Duplicated Transactions
+      5. Transaction posted to a Wrong Account
+      6. Wrong Amount Credited
+      7. Wrong Amount Debited
+      8. Wrong reference number on Float
+      9. Am failing to register on mobile banking
+      10. I am getting an Error when transacting on mobile banking
+      11. Failed Multichoice
+      12. Failed Mobile Money transaction from Bank to Mobile Money
+      13. Failed Mobile Money transaction from Mobile Money to Bank
+      14. Wrong Funds Transfer
+      15. Mobile Banking PIN Reset
+      16. Failed Bill payment to a school
+      17. Failed Bill payment - Water
+      18. I am requesting for reversal of wrong funds transfer
+      19. Zesco Token
+  utter_card_q1:
+  - text: |
+      You can change your card PIN at the ATM:
+      1. Insert your card.
+      2. Enter the old PIN.
+      3. Select 'Other services'.
+      4. Select 'Change PIN' and follow the steps.
+      ATM Locator: 
+      https://www.zanaco.co.zm/branch-locator.php 
+      https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_card_q2:
+  - text: |
+      For security reasons, you will need to go into the bank and present your debit card and personal identification to have your Debit card PIN reset instantly.
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_card_q3:
+  - text: |
+      For security reasons, you will need to go into the bank and present your debit card and valid ID to have your PIN reset instantly.
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_card_q4:
+  - text: |
+      You have 3 tries. When a card PIN is blocked it automatically unblocks after 24 hours.
+      If you remember your PIN, you can use it after 24 hours.
+      If not, visit any branch with your ATM card and valid ID to reset it.
+      Branch & ATM locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_card_q5:
+  - text: |
+      You have 3 tries. When a card PIN is blocked it automatically unblocks after 24 hours.
+      If you remember your PIN, you can use it after 24 hours.
+      If not, visit any branch with your ATM card and valid ID to reset it.
+      Branch & ATM locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_card_q6:
+  - text: |
+      Yes, you can use your card anywhere in the world wherever Visa is accepted.
+  utter_card_q7:
+  - text: |
+      1. Dial *444# on your mobile phone.
+      2. Select Option 6 (Manage Account)
+      3. Then Option 8 > Block Card.
+      Contact us on 5000 (all networks) to report the card as lost/stolen.
+      Hours: Mon–Sat 07:00–19:00, Sun 07:00–16:00
+      Mobile App:
+      https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco
+      https://apps.apple.com/us/app/zanaco-mobile/id1255854516
+  utter_card_q8:
+  - text: |
+      No. Only one card is issued per individual account.
+      For joint accounts, two cards can be issued.
+      Account offerings: https://www.zanaco.co.zm/
+  utter_card_q9:
+  - text: |
+      To assist you, please share:
+      1. Your account number
+      2. Your mobile number
+      3. The amount
+      4. Date of transaction
+      5. Last 4 digits of your card
+  utter_card_q10:
+  - text: |
+      Call 5000 (all networks) to block your card.
+      Hours: Mon–Sat 07:00–19:00, Sun 07:00–16:00
+      Or use Mobile Banking:
+      Dial *444# > 00 > Option 8 > Option 3 to block your card.
+      Mobile App:
+      https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco
+      https://apps.apple.com/us/app/zanaco-mobile/id1255854516
+  utter_card_q11:
+  - text: |
+      Please visit any branch to get a new card, as the old card won’t work after reopening your account.
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_card_q12:
+  - text: |
+      Confirm with the merchant if the refund was processed.
+      If 5 business days have passed, provide:
+      1. Account number
+      2. Refund amount
+      3. Refund date
+      4. Last 4 digits of your card
+      5. Mobile number
+  utter_card_q13:
+  - text: |
+      Kindly visit any of our branches to request a daily card limit increase.
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_card_q14:
+  - text: |
+      Kindly visit any of our branches to be assisted with enabling full card access outside the country.
+  utter_card_q15:
+  - text: |
+      We’ll need more info to help investigate:
+      1. Your account number
+      2. NRC Number
+      3. Last 4 digits of your card
+      4. Mobile number
+  utter_card_q16:
+  - text: |
+      A "blocked amount" is a transaction that has not yet cleared after an online or POS payment.
+  utter_card_q17:
+  - text: |
+      To help us investigate, provide:
+      1. Account number
+      2. Transaction amount
+      3. Date
+      4. Mobile number
+  utter_card_q18:
+  - text: |
+      Kindly visit any branch and fill in a card usage form to enable card access outside the country.
+  utter_card_q19:
+  - text: |
+      To help us investigate, provide:
+      1. Account number
+      2. Transaction amount
+      3. Date
+      4. Mobile number
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_card_q20:
+  - text: |
+      Charges and fees can be found here:
+      Tariff Guide: https://www.zanaco.co.zm/personal-banking.php?p=156
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_efts_q14:
+  - text: |
+      Please assist us with the following details so we can trace the returned transfer:
+      - Your account number  
+      - Amount  
+      - Date of transaction  
+      - Mobile number  
+      Your service request will be submitted accordingly.
+  utter_efts_q13:
+  - text: |
+      Kindly provide:
+      - Account number  
+      - Amount expected  
+      - Date of transaction  
+      - Mobile number  
+      We will investigate the currency conversion issue.
+  utter_efts_q12:
+  - text: |
+      Please provide your account details, transaction amount, and mobile number. We will help you verify and trace the reversal.
+  utter_efts_q11:
+  - text: |
+      These could be correspondent bank charges applied on incoming international funds. Zanaco does not charge any fees for receiving such funds.
+  utter_efts_q10:
+  - text: |
+      Kindly request a bank statement.  
+      You can also access eStatements via our self-service portal:  
+      🔗 [Self-Service Portal](https://www.zanaco.co.zm/selfserviceportal/)
+  utter_efts_q9:
+  - text: |
+      A DDACC debit appears if you have signed a DDACC mandate with a service provider authorizing direct debit from your account.
+  utter_efts_q8:
+  - text: |
+      Please provide:
+      - Your account number  
+      - Amount  
+      - Mobile number  
+
+      We will assist you in verifying the transaction.
+  utter_efts_q7:
+  - text: |
+      Delays may occur due to:
+      - Unfunded recipient account  
+      - Awaiting debit approval  
+      - Rules allow recipients to reject debits without authority  
+      ⏱️ ZECHL rules: Recalls must be responded to within 72 hours.
+  utter_efts_q6:
+  - text: |
+      As per Bank of Zambia regulations, a bounced DDACC attracts a penalty of:
+      - K510 for personal accounts
+      - K840 for corporate accounts  
+      📄 [Tariff Guide](https://www.zanaco.co.zm/personal-banking.php?p=156)
+  utter_efts_q5:
+  - text: |
+      Possible reasons include:
+      - Invalid beneficiary account details
+      - Transfers made after 14:00 cut-off time
+      - Transfers made during weekends or public holidays
+
+      If none of these apply, please share:
+      1. Your account number  
+      2. Amount  
+      3. Date of transaction  
+      4. Mobile number
+  utter_efts_q4:
+  - text: |
+      This depends on the time and session in which the funds were sent. Kindly request the remitting bank to provide the file ID for further investigation.
+  utter_efts_q3:
+  - text: |
+      Your funds may be delayed due to the remitting bank delaying the transfer, using the wrong format, or sending invalid account details. Request a Bank of Zambia Proof of Payment from the remitting bank.
+  utter_efts_q2:
+  - text: |
+      Kindly give an allowance of 48 hours for DDACC transfers processed on business days. If the funds haven’t reflected, the transfer may have failed. Request the sender to follow up with their bank.
+      📲 Zanaco Mobile App: [Android](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco) | [iOS](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_efts_q1:
+  - text: |
+      Your transfer may be delayed if it was sent on a weekend, a holiday, or after the cut-off time (14:30 hrs). On business days, the funds typically reflect on the next business day. If it has been several days, the transfer may have failed.
+      📲 [Download Zanaco Mobile App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco) | [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_credit_q1:
+  - text: |
+      1.You need to have a transactional account
+      2. Follow this link and click on it to see if you qualify
+      3. If you qualify, you'll see a list of our loan offers
+      4. 3 latest payslips
+      5. Passport size photos
+      6. NRC
+      7. Letter of introduction
+      8. Letter of undertaking from your employers
+      - Links https://online.zanaco.co.zm/LoanPortal/ Loan Information https://www.zanaco.co.zm/personal-banking.php?p=91
+  utter_credit_q2:
+  - text: |
+      Apply for a loan in‑branch Visit your nearest branch with the following documents: Your original NRC your most recent payslips (3 months if you earn a monthly salary
+      - Links Loan Information https://www.zanaco.co.zm/personal-banking.php?p=91 https://online.zanaco.co.zm/LoanPortal/ https://www.zanaco.co.zm/SalaryAdvance/customer/generate_otp
+  utter_credit_q3:
+  - text: |
+      Apply for a Zanaco Xpress Loan via our USSD by dialing *444# Select option '5', then option '1' and follow the steps
+  utter_credit_q4:
+  - text: |
+      Refer to a live Agent https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q5:
+  - text: |
+      Refer to a live Agent https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q6:
+  - text: |
+      For Xpress loans applied through mobile banking, you will receive funds immediately* *T&Cs apply.  
+      For other loans, you will receive funds within 48 working hours if you are an existing Zanaco customer who applied in‑branch or online if all conditions have been met  
+      https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q7:
+  - text: |
+      Yes, we you can top ‑up your existing loan on our Revolving Loans provided you are within the debt service ratio You can top‑up your loan by visiting your nearest Zanaco Bank branch.  
+      https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q8:
+  - text: |
+      Yes, as long as your loan is within the debt ratio limit You can refinance your loan by visiting your nearest Zanaco Bank branch.  
+      https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q9:
+  - text: |
+      Yes, Zanaco pays off loans outstanding with other financial institutions as long as you are within the debt ratio limit and product requirements. You will be required to submit: Statement from the Financial institution 3 latest payslips Passport size photos NRC Copy Letter of introduction Letter of undertaking from your employers.  
+      *You can refinance your loan by visiting your nearest Zanaco Bank branch. https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q10:
+  - text: |
+      Yes, Zanaco pays off loans outstanding with other financial institutions as long as you are within the debt ratio limit and meet the required product conditions. You will be required to submit: Statement from the Financial institution 3 latest payslips Passport size photos NRC Copy Letter of introduction Letter of undertaking from your employers.  
+      *You can refinance your loan by visiting your nearest Zanaco Bank branch. Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q11:
+  - text: |
+      Yes, there are some fees related to loan processing Follow this link for more details(Tarriff) https://www.zanaco.co.zm/personal‑banking.php?p=156
+  utter_credit_q12:
+  - text: |
+      For CRB clearance, visit your nearest branch to assist with this request Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q13:
+  - text: |
+      For loan disbursement advise, visit your nearest branch with your NRC to assist with this request https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q14:
+  - text: |
+      You can request for a loan statement with a nil balance from your nearest branch or your personal banker as confirmation of the loan balance being cleared. Visit your nearest branch to assist with this request https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q15:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Assist us with your name, NRC number, Account number and contact details https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q16:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Assist us with your name, NRC number and contact details https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q17:
+  - text: |
+      Thank you for your enquiry. Visit any of our branches to assist with this request https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q18:
+  - text: |
+      Thank you for your enquiry. Since there is no collateral, qualifying for a Premier loan is ultimately determined by your credit history, income, other debt obligations and monthly cash flow. Visit any branch https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q19:
+  - text: |
+      Thank you for your enquiry. Visit any of our branches to assist with this request https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q20:
+  - text: |
+      Thank you for your enquiry. Since there is no collateral, qualifying for a Scheme loan is ultimately determined by your employer, credit history, income, other debt obligations and monthly cash flow. Visit any branch https://www.zanaco.co.zm/branch‑locator.php
+  utter_credit_q21:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Assist us with your name, NRC number and contact details Links Branch Locator https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q22:
+  - text: |
+      Thank you for your enquiry. Kindly click on the link below to get the current rates Link for Tarriff Guide https://www.zanaco.co.zm/personal‑banking.php?p=156 Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q23:
+  - text: |
+      Thank you for your enquiry. Kindly click on the link below to get the current rates Link for Tarriff Guide https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q24:
+  - text: |
+      Thank you for your enquiry. We send monthly loan statements to your email. If you do not receive the statement, visit any branch to update your e‑mail address Links other media https://www.zanaco.co.zm/branch‑locator.php
+  utter_credit_q25:
+  - text: |
+      Thank you for your enquiry. Yes. We finance loans related to meet needs of agricultural businesses. Visit your nearest branch to assist with this request https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q26:
+  - text: |
+      Your repayment dates are provided in your loan agreement. Repayments are made through your transactional bank account or directly deducted from your Pay Slip for Scheme loans https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q27:
+  - text: |
+      You can pay the balance of your loan by sending written instruction to the Bank. A loan statement with a nil balance will be availed after loan is settled. https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q28:
+  - text: |
+      Thank you for your enquiry. We send monthly loan statements to your email. If you do not receive the statement, visit any branch to update your e‑mail address https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_credit_q29:
+  - text: |
+      Yes we do. Visit any branch to get a Mortgage Loan https://www.zanaco.co.zm/branch‑locator.php Mobile Banking https://www.zanaco.co.zm/personal‑banking.php?p=76
+  utter_bill_muster_q1:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Kindly assist us with:
+      1. Your student/reference number
+      2. Name of Institution
+      3. Amount
+      4. Your NRC number
+      5. Date of deposit
+      6. The branch/Agent you deposited with
+      7. Mobile number
+
+      Links:
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+      Bill Muster Search: https://www.zanaco.co.zm/search-results.php?s=bill+muster
+  utter_bill_muster_q2:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Kindly assist us with:
+      1. Your student/reference number
+      2. Name of Institution
+      3. Amount
+      4. Your NRC number
+      5. Date of deposit
+      6. The branch/Agent you deposited with
+      7. Mobile number
+
+      Links:
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+      Bill Muster Search: https://www.zanaco.co.zm/search-results.php?s=bill+muster
+  utter_bill_muster_q3:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Kindly assist us with:
+      1. Your student/reference number
+      2. Name of Institution
+      3. Amount
+      4. Your NRC number
+      5. Date of deposit
+      6. The branch/Agent you deposited with
+      7. Mobile number
+
+      Links:
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+      Bill Muster Search: https://www.zanaco.co.zm/search-results.php?s=bill+muster
+  utter_bill_muster_q4:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Kindly assist us with:
+      1. Your student/reference number
+      2. Name of Institution
+      3. Amount
+      4. Your NRC number
+      5. Date of deposit
+      6. The branch/Agent you deposited with
+      7. Mobile number
+
+      Links:
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+      Bill Muster Search: https://www.zanaco.co.zm/search-results.php?s=bill+muster
+  utter_bill_muster_q5:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Kindly assist us with:
+      1. Your student/reference number
+      2. Name of Institution
+      3. Amount
+      4. Your NRC number
+      5. Date of deposit
+      6. The branch/Agent you deposited with
+      7. Mobile number
+
+      Links:
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+      Bill Muster Search: https://www.zanaco.co.zm/search-results.php?s=bill+muster
+  utter_bill_muster_q6:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Kindly assist us with:
+      1. Your student/reference number
+      2. Name of Institution
+      3. Amount
+      4. Your NRC number
+      5. Date of deposit
+      6. The branch/Agent you deposited with
+      7. Mobile number
+
+      Links:
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+      Bill Muster Search: https://www.zanaco.co.zm/search-results.php?s=bill+muster
+  utter_bill_muster_q7:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query. Kindly assist us with:
+      1. Your student/reference number
+      2. Name of Institution
+      3. Amount
+      4. Your NRC number
+      5. Date of deposit
+      6. The branch/Agent you deposited with
+      7. Mobile number
+
+      Links:
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+      Bill Muster Search: https://www.zanaco.co.zm/search-results.php?s=bill+muster
+  utter_internet_banking_1:
+  - text: |
+      Thank you for your enquiry.  Cutoff time is dependant on the type of transfer you wish to make. RTGS transfers are cutoff at 15:00 hours each business day. DDACC transfers are cutoff at 14:30 hours each business day. Swift transfers are cutoff at 14:30 hours each business day. All transfer to other banks posted after 14:30 will be processed on the next business day.
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_2:
+  - text: |
+      Thank you for your enquiry. Kindly assist us with your e-mail address and mobile number so that we can send you Internet Banking Sign Up Forms.
+      Mobile App Download:
+      - Android: https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco
+      - iOS: https://apps.apple.com/us/app/zanaco-mobile/id1255854516
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_3:
+  - text: |
+      No. Only the owner of the account can call to have a password reset guide.
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_4:
+  - text: |
+      No. If you would like to add another account, visit any Zanaco branch near you to make this request. Your new account will be added to your Internet Banking immediately!!!
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_5:
+  - text: |
+      1. Click on profile and then click 'Forgot Profile Password'
+      2. Follow the steps and reset the password
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_6:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query.
+      Kindly assist us with:
+      1. Your name
+      2. Account number
+      3. Amount
+      4. Date of transaction
+      5. Beneficiary details
+      6. Mobile number
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_7:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query.
+      Kindly assist us with:
+      1. Your name
+      2. Account number
+      3. Amount
+      4. Date of transaction
+      5. Beneficiary details
+      6. Mobile number
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_8:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query.
+      Kindly assist us with:
+      1. Your name
+      2. Account number
+      3. Mobile or email address the OTP is being delivered to
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_9:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query.
+      Kindly advise us:
+      1. Your name
+      2. Account number
+      3. NRC number
+      4. Mobile number
+      5. Email ID
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_internet_banking_10:
+  - text: |
+      Thank you for your enquiry. We may be experiencing system failure at the moment, try again after some time.
+      Mobile Banking Info: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_internet_banking_11:
+  - text: |
+      Thank you for your enquiry. We will need more information to help us investigate your query.
+      Kindly assist us with:
+      1. Your name
+      2. Account number
+      3. Amount
+      4. Date of transaction
+      5. Beneficiary details
+      6. Mobile number
+      More info: https://www.zanaco.co.zm/news.php?p=290
+  utter_general_q1:
+  - text: |
+      Current Balance shows your balance as of the last business day. Available Balance is the difference between the Current Balance and any transactions (plus or minus) that are currently shown as pending  
+      Links  
+      Mobile App Download link:  
+      https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco  
+      https://apps.apple.com/us/app/zanaco-mobile/id1255854516  
+      Internet Banking Information:  
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76  
+      Internet Banking: https://www.zanaco.co.zm/news.php?p=290
+  utter_general_q2:
+  - text: |
+      Yes, your balance will change as items are debited or credited to your account.  
+      Links  
+      Mobile App Download link:  
+      https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco  
+      https://apps.apple.com/us/app/zanaco-mobile/id1255854516  
+      Internet Banking Information  
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76  
+      Internet Banking: https://www.zanaco.co.zm/news.php?p=290
+  utter_general_q3:
+  - text: |
+      You must have the legal documentation showing the reason for the name change (e.g., marriage license, divorce decree, etc.) and present your updated identification (such as your driver's license). A new signature card will be printed for all individuals on the account to sign.  
+      Visit any Zanaco Branch to facilitate this request.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q4:
+  - text: |
+      Thank you for your enquiry.  
+      To add someone to your account, they must be present and have identification. A new signature card will be printed for all account holders.  
+      To remove someone, the person being removed must sign a Change of Ownership form at a Zanaco branch, and it must be notarized.  
+      Visit any Zanaco Branch to facilitate this request.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q5:
+  - text: |
+      Who qualifies  
+      * Individual with average balances of ZMW 70,000+ or monthly income ZMW 70,000+  
+      Account opening requirements  
+      * Certified copies of National Identity  
+      * Two passport-size photos  
+      * Proof of residence  
+      * TPIN  
+      Visit any branch to open your account  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php  
+      Private Banking: https://www.zanaco.co.zm/private-banking.php
+  utter_general_q6:
+  - text: |
+      Kindly note you will need to visit your nearest branch and submit a written application to have your Zanaco account closed.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q7:
+  - text: |
+      You will need to submit a letter signed by you requesting that the charge be removed and include a valid reason.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q8:
+  - text: |
+      Kindly note, the debit card PIN cannot be changed through the Mobile App or Zanaco Xpress agent.  
+      For security reasons, you will need to go into the bank and present your debit card and personal identification to have your Debit card PIN reset instantly.  
+      Links  
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php  
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_general_q9:
+  - text: |
+      You will need to go to the branch with your National Registration Card and debit card, or mobile phone for mobile banking PIN resets.  
+      Links  
+      Branch Locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q10:
+  - text: |
+      You can view your balance instantly by logging into the Zanaco Mobile App or by dialing *444#.  
+      Links  
+      Mobile App Download:  
+      https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco  
+      https://apps.apple.com/us/app/zanaco-mobile/id1255854516
+  utter_general_q11:
+  - text: |
+      It means that we have charged you for not maintaining the required minimum monthly balance on your account.  
+      Please refer to our Schedule of Tariffs for the required balances.  
+      Links  
+      Schedule of Tariffs: https://www.zanaco.co.zm/tariffs.php
+  utter_general_q12:
+  - text: |
+      Kindly visit the nearest Zanaco branch to update your details or request any personal document updates.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q13:
+  - text: |
+      Visit any Zanaco branch to obtain and fill out the mandate amendment form.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q14:
+  - text: |
+      Kindly note, a stop order is a standing instruction you give the bank to make recurring payments from your account.  
+      To stop this, you will need to go into the bank and complete a Stop Payment form.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q15:
+  - text: |
+      Yes. You can request a statement for any of your accounts at any Zanaco branch.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q16:
+  - text: |
+      Statements will show transactions up to the date you request it.  
+      If a transaction is pending, it may not yet appear.
+  utter_general_q17:
+  - text: |
+      Kindly note, you will need to go to the branch with your debit card and National Registration Card (NRC) to request a PIN reset.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q18:
+  - text: |
+      Yes, you may collect a new card from your branch. A fee may apply.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q19:
+  - text: |
+      Kindly visit your nearest branch and present your NRC and a copy of the death certificate to initiate the process.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q20:
+  - text: |
+      Kindly contact your nearest branch to initiate the process and provide documentation as required.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q21:
+  - text: |
+      For security reasons, we cannot accept such requests over chat.  
+      Kindly visit the nearest Zanaco branch.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q22:
+  - text: |
+      Yes. When you close an account, ensure you provide your updated contact and account details.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q23:
+  - text: |
+      We encourage you to contact our customer support or visit a branch for support with any card dispute or unauthorized transaction.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q24:
+  - text: |
+      You can update your mobile number or email by visiting your nearest branch with your NRC.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q25:
+  - text: |
+      You will need to submit a signed written request and show your NRC.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q26:
+  - text: |
+      Yes. You may collect your bank statement from any Zanaco branch or request to have it emailed.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q27:
+  - text: |
+      You will need to go into your branch and request to have the fees waived. This is subject to management approval.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q28:
+  - text: |
+      Your statement will show the date and time of all card and account transactions.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q29:
+  - text: |
+      A minimum balance fee is charged if your account falls below the required balance during a statement period.  
+      Links  
+      Schedule of Tariffs: https://www.zanaco.co.zm/tariffs.php
+  utter_general_q30:
+  - text: |
+      Kindly ensure that the account being used for payment has sufficient balance.  
+      You may also want to confirm if there are any payment limits or blocked features.  
+      Links  
+      Visit: https://www.zanaco.co.zm/zanaco-xpress.php  
+      Mobile Banking: https://www.zanaco.co.zm/personal-banking.php?p=76
+  utter_general_q31:
+  - text: |
+      If you believe you have been charged a fee in error, you may raise a dispute at your branch.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q32:
+  - text: |
+      Account types vary in fee structure. Refer to the tariff guide to understand what applies to your account.  
+      Links  
+      Schedule of Tariffs: https://www.zanaco.co.zm/tariffs.php
+  utter_general_q33:
+  - text: |
+      You may log in to your Mobile App or visit a branch to check your cheque clearance status.  
+      Links  
+      Mobile App Download:  
+      https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco  
+      https://apps.apple.com/us/app/zanaco-mobile/id1255854516  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q34:
+  - text: |
+      Zanaco is committed to security. You will be required to verify your identity when making any significant changes.  
+      Links  
+      https://www.zanaco.co.zm/
+  utter_general_q35:
+  - text: |
+      You may request a reference letter for your bank account by visiting your nearest branch.  
+      A processing fee may apply.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_general_q36:
+  - text: |
+      If you no longer wish to receive promotional SMSs or Emails, please visit your nearest branch and request to opt out.  
+      Links  
+      Branch locator: https://www.zanaco.co.zm/branch-locator.php
+  utter_mobile_banking_q1:
+  - text: |
+      You can link your account to mobile banking by visiting any of our branches. You can also call 5000 if you have a Virtual Account.
+
+      Links:
+      - [Download Mobile App - Android](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [Download Mobile App - iOS](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+      - [Mobile Banking Info](https://www.zanaco.co.zm/personal-banking.php?p=76)
+  utter_mobile_banking_q2:
+  - text: |
+      You can change your account or mobile number on mobile banking by visiting any of our branches. You can also call 5000 if you have a Virtual Account.
+      Links:
+      - [Download Mobile App - Android](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [Download Mobile App - iOS](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+      - [Mobile Banking Info](https://www.zanaco.co.zm/personal-banking.php?p=76)
+  utter_mobile_banking_q3:
+  - text: |
+      Thank you for your enquiry. We will need more information to investigate your query. Kindly assist us with:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. Amount
+      5. Date of transaction
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q4:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q5:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. Amount
+      5. Date of transaction
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q6:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q7:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. Amount
+      5. Date of transaction
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q8:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. Amount
+      5. Date of transaction
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q9:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q10:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q11:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+      5. Your DSTV account number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q12:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+      5. Amount
+      6. Recipient number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q13:
+  - text: |
+      Kindly assist with:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+      5. Amount
+      6. Recipient number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q14:
+  - text: |
+      Kindly assist with:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+      5. Amount
+      6. Date
+      7. Recipient Mobile number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q15:
+  - text: |
+      For Mobile Banking PIN reset:
+      - Dial *444#
+      - Select “Forgot PIN”
+      - Enter your account details and first 6 digits of your NRC
+      - Answer the security question to reset
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q16:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+      5. Student ID number
+      6. Amount
+      7. Date of transaction
+      8. Name of the Institution
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q17:
+  - text: |
+      Kindly provide:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. Meter number
+      5. Amount
+      6. Date of transaction
+      7. Name of the Water Utility Company
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q18:
+  - text: |
+      Kindly assist with:
+      1. Your name
+      2. Account number
+      3. Mobile number
+      4. NRC number
+      5. Amount
+      6. Date
+      7. Recipient Mobile number
+
+      Links:
+      - [Android App](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)
+      - [iOS App](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_mobile_banking_q19:
+  - text: |
+      To retrieve your Zesco token:
+      - Dial *444#
+      - Select option 4 “Bill Payment”
+      - Select option 1 “Utility Bill”
+      - Select option 1 “Zesco”
+      - Then option 2 “Last Token Purchased”
+
+      Or dial *3600# (Zesco USSD).
+  utter_zanaco_xpress_1:
+  - text: |
+      Kindly assist us with your name, account number, mobile number, amount and date of transaction and recipient's mobile or account number.
+  utter_zanaco_xpress_2:
+  - text: |
+      Kindly assist us with your name, account number, mobile number, amount and date of transaction.
+  utter_zanaco_xpress_3:
+  - text: |
+      Kindly assist us with your name, account number, mobile number, amount and date of transaction.
+  utter_zanaco_xpress_4:
+  - text: |
+      Kindly assist us with your name, account number, mobile number, amount and date of transaction.
+  utter_zanaco_xpress_5:
+  - text: |
+      Kindly assist us with your name, account number, mobile number, amount and date of transaction and recipient's mobile or account number.
+  utter_zanaco_xpress_6:
+  - text: |
+      Kindly assist us with your name, account number, mobile number, amount and date of transaction and recipient's mobile or account number.
+  utter_zanaco_xpress_7:
+  - text: |
+      Kindly assist us with your name, account number, mobile number, amount and date of transaction and recipient's mobile or account number.
+  utter_zanaco_xpress_8:
+  - text: |
+      Kindly assist us with your account number, mobile number, amount, date of transaction and wrong reference.
+  utter_zanaco_xpress_9:
+  - text: |
+      Kindly assist us with your name, account, mobile and NRC number  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)  
+      [App Store](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_zanaco_xpress_10:
+  - text: |
+      Kindly assist us with your name, account, mobile and NRC number  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)  
+      [App Store](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_zanaco_xpress_11:
+  - text: |
+      Kindly assist us with your name, account, mobile and NRC number  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco)  
+      [App Store](https://apps.apple.com/us/app/zanaco-mobile/id1255854516)
+  utter_zanaco_xpress_12:
+  - text: |
+      Kindly assist us with your name, account, mobile, NRC number, Amount, date and recipient number  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco&pcampaignid=web_share)
+  utter_zanaco_xpress_13:
+  - text: |
+      Kindly assist us with your name, account, mobile, NRC number, Amount, date and recipient number  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco&pcampaignid=web_share)
+  utter_zanaco_xpress_14:
+  - text: |
+      Kindly assist us with your name, account, mobile, NRC number, Amount, date and recipient number  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco&pcampaignid=web_share)
+  utter_zanaco_xpress_15:
+  - text: |
+      You can link your account to mobile banking by visiting any of our branches.  
+      You can also call 5000 if you have a Virtual Account.  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco&pcampaignid=web_share)
+  utter_zanaco_xpress_16:
+  - text: |
+      Kindly assist us with your name, account, mobile, NRC number, Amount, date and name of the Institution  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco&pcampaignid=web_share)
+  utter_zanaco_xpress_17:
+  - text: |
+      Kindly assist us with your name, account, mobile, Amount, date and name of the Water Utility Company  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco&pcampaignid=web_share)
+  utter_zanaco_xpress_18:
+  - text: |
+      Kindly assist us with your name, account, mobile, NRC number, Amount, date and recipient mobile or account number  
+      Link to download mobile App: 
+      [Google Play](https://play.google.com/store/apps/details?id=com.devshackintl.vmobile.zanaco&pcampaignid=web_share)
+  utter_zanaco_xpress_19:
+  - text: |
+      Dial *444#,  
+      Select option 4 Bill payment,  
+      Select option 1 Utility bill,  
+      Select option 1, Zesco then option 2, Last token purchased  
+      You can also dial Zesco USSD *3600#
+  utter_ask_assistance:
+  - text: Did I answer your queries?
+    buttons:
+    - title: Yes
+      payload: /affirm
+    - title: No
+      payload: /deny
+  utter_entry_flow:
+  - text: Select one of the options to proceed further
+    buttons:
+    - title: FAQs
+      payload: /FAQs
+    - title: Live Agent
+      payload: /live_agent
+actions:
+- utter_greet
+- action_show_main_menu
+- utter_greet_with_name
+- action_handle_option
+- action_handle_affirm
+- action_handle_rating
+- action_handle_feedback
+- submit_feedback_form
+- submit_customer_info_form
+- action_ask_name
+- action_save_name
+- action_deactivate_form
+- action_set_menu_level_faqs
+- action_enter_name
+- action_reset_cust_info  
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
